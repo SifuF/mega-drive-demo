@@ -1,0 +1,7 @@
+# Ignore build
+Game.bin
+Game .sym
+Game.sym
+
+# Ignore assembler
+asm68k.exe

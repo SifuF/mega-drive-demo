@@ -1,4 +1,4 @@
-# **genesis-68k-demo**
+# **Genesis 68k demo**
 #### Sega Genesis/Mega Drive 68k assembler demo
 
 Requires asm68k to build. For Windows, a batch file is provided. Simply copy ```asm68k.exe``` into the project root and run ```BUILD.BAT```

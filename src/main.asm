@@ -189,7 +189,6 @@ HSYNC
 	
 VSYNC
 	
-	
 	;move.l #$C0020000,d0					;Color 1
 	;move.l d0,VDPCtrl
 	;move.w #%0000000011101110,VDPData	
@@ -243,12 +242,12 @@ TESTLETTER
 	dc.l	$10000010
 	dc.l	$00000000		
 
-	INCLUDE	Fonts.asm
-	INCLUDE	Patterns.asm		
+	INCLUDE	fonts.asm
+	INCLUDE	patterns.asm		
 	
-SPRITEY
-	incbin "han.RAW"
-SPRITEY_END
+RAWTEST
+	incbin "rawtest.raw"
+RAWTEST_END
 	
 ;--------------------------------------------------------------------------------------------------
 ;	Main entry point
@@ -256,8 +255,6 @@ SPRITEY_END
 	
 START
 
-	
-	
 	move.b	($A10001),d0			;TMSS
 	andi.b	#$0F,d0
 	beq		NOTMSS
@@ -368,7 +365,6 @@ VRAMClrLoop
 	move.l d0,VDPCtrl
 	move.w #%0000111011101110,VDPdata		
 	
-	
 	;---------------------------------------------------------------------------------------------
 	;	VSRAM addresses for vertical scrolling (special addresses, not in VRAM)
 	;	40 x 10bit words
@@ -388,7 +384,6 @@ VRAMClrLoop
 	;---------------------------------------------------------------------------------------------
 
 	;VSRAM code here
-	
 	
 	;-----------------------------------------------------------------------
 	;	Load Patterns
@@ -415,34 +410,33 @@ VRAMClrLoop
 	;
 	;-----------------------------------------------------------------------	
 	
-	move.l	#((TILE_FONT1_END-TILE_FONT1)/4)-1,d0
-	move.l #$40000000,d1			
+    move.l #$40000000,d1			
 	move.l d1,VDPCtrl
+
+	move.l	#((TILE_FONT1_END-TILE_FONT1)/4)-1,d0
 	lea TILE_FONT1,a0
-TileLoop
+TileLoopFont1
 	move.l (a0)+,VDPData
-	dbra d0,TileLoop
+	dbra d0,TileLoopFont1
 	
 	move.l	#((TILE_BG1_END-TILE_BG1)/4)-1,d0
 	lea TILE_BG1,a0
-TileLoop2
+TileLoopBg1
 	move.l (a0)+,VDPData
-	dbra d0,TileLoop2
+	dbra d0,TileLoopBg1
 	
 	move.l	#((TILE_SPRITE1_END-TILE_SPRITE1)/4)-1,d0
 	lea TILE_SPRITE1,a0
-TileLoop3
+TileLoopSprite1
 	move.l (a0)+,VDPData
-	dbra d0,TileLoop3
+	dbra d0,TileLoopSprite1
 	
-	move.l	#((SPRITEY_END-SPRITEY)/4)-1,d0
-	lea SPRITEY,a0
-TileLoop4
+	move.l	#((RAWTEST_END-RAWTEST)/4)-1,d0
+	lea RAWTEST,a0
+TileLoopRawtest
 	move.l (a0)+,VDPData
-	dbra d0,TileLoop4
-	
-	
-	
+	dbra d0,TileLoopRawtest
+
 	;-------------------------------------------------------------------------------
 	;	Scroll A. 
 	;	Defined (in VDP Reg#2) from $C000 Onwards. 64 tiles length x 32 tiles height
@@ -515,13 +509,11 @@ TileLoop4
 	move.w #$002A,VDPdata
 	move.w #$002B,VDPdata
 	
-	
 	move.l #$4D000003,d0					
 	move.l d0,VDPCtrl
 	
 	move.w #$0005,VDPdata
 	move.w #$0005,VDPdata
-	
 	
 	move.l #$4DA00003,d0					
 	move.l d0,VDPCtrl
@@ -534,7 +526,6 @@ TileLoop4
 	
 	move.w #$0006,VDPdata
 	move.w #$0006,VDPdata
-	
 	
 	;-------------------------------------------------------------------------------
 	;	Scroll B. 
@@ -557,7 +548,6 @@ ScrollBLoop
 	move.w	#$002C,VDPData			
 	dbra	d0,ScrollBLoop	
 	
-	
 	;--------------------------------------------------------------------
 	;	Window. 
 	;	Defined (in VDP reg#3) from $F000 Onwards. 
@@ -565,7 +555,6 @@ ScrollBLoop
 	;--------------------------------------------------------------------	
 	
 	;Window code here
-	
 	
 	;--------------------------------------------------------------------------------------------------------------------------------------------------------
 	;	Sprites. 
@@ -653,7 +642,6 @@ ScrollBLoop
 	
 	;HScroll code here
 	
-	
 	;--------------------------------------------------------------------
 	;	Init game logic 
 	;
@@ -663,7 +651,6 @@ ScrollBLoop
 	move.l #$00000080,d3
 	move.l #1000,d2
 
-	
 	;move.w	#$8144,(VDPCtrl)	;C00004 reg 1 = 0x44 unblank display
 	
 	move.w  #$100,$A11100    	;Z80 Bus REQ on (#$0 = off)
@@ -675,8 +662,6 @@ FMCheck
 	move.b	(a0),d0
 	andi.l	#$00000080,d0
 	bne FMCheck	
-
-	
 	
 ;	move.l #10000000000,d1
 ;WWWWW
@@ -685,16 +670,12 @@ FMCheck
 ;	move.b	#$28,$A04000
 ;	move.b	#$00,$A04001
 
-
 	move.w	%0000011100000000,sr	;Enable interrupts on 68k
+	
 	;--------------------------------------------------------------------
 	;	Main rendering loop
 	;
 	;--------------------------------------------------------------------
-	
-	
-
-	
 	
 MAINLOOP
 	move.l	#$58000003,d1						

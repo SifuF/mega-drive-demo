@@ -398,6 +398,4 @@ TILE_FONT1
 	dc.l	$00000000
 	dc.l	$00000000
 	
-	
-	
 TILE_FONT1_END	

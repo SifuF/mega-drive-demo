@@ -1,2 +1,2 @@
-asm68k /p /i /w /ov+ /oos+ /oop+ /oow+ /ooz+ /ooaq+ /oosq+ /oomq+ /ow+ Game.asm,Game.bin,Game
+bin\asm68k.exe /p /i /w /ov+ /oos+ /oop+ /oow+ /ooz+ /ooaq+ /oosq+ /oomq+ /ow+ main.asm,bin\main.bin,main
 pause

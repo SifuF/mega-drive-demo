@@ -1,9 +1,8 @@
-;Mega Drive project by SifuF 17/07/21
+;Mega Drive project by SifuF 10/01/24
 
 ;-----------------------------------------------------------------------------------------------
-; 68k Memory map
+;  68k Memory map
 ;-----------------------------------------------------------------------------------------------
-
 ;$000000    $3FFFFF     Cartridge ROM/RAM
 ;$400000    $7FFFFF     Reserved (used by the Sega CD and 32x)
 ;$800000    $9FFFFF     Reserved (used by the 32x?)
@@ -61,10 +60,10 @@
 ;$C0001E                Disable/Debug register (Mirror)
 ;$C0001E    $FEFFFF     Reserved
 ;$FF0000    $FFFFFF     68000 RAM
-;------------------------------------------------------------------------------
-; z80 Memory map
-;------------------------------------------------------------------------------
 
+;------------------------------------------------------------------------------
+;  z80 Memory map
+;------------------------------------------------------------------------------
 ;$0000  $1FFF   Sound Ram
 ;$2000  $3FFF   Reserved
 ;$4000          YM2612 A0
@@ -81,48 +80,46 @@
 ;------------------------------------------------------------------------------
 ; Equates
 ;------------------------------------------------------------------------------
-
 VDPData equ $C00000
 VDPCtrl equ $C00004
 VRAMWCtrl equ $40000000
 
 ;------------------------------------------------------------------------------
-; 68k Vector table   $000000 - $0000FF
+;  68k Vector table   $000000 - $0000FF
 ;------------------------------------------------------------------------------
-
 	org		$00000000
-	dc.l	$00FFFE00	;0 Reset SP                                     $000000 
-	dc.l	START		;1 Reset PC                                     $000004 
-	dc.l	INTR		;2 Bus error                                    $000008 
-	dc.l	INTR		;3 Address error                                $00000C 
-	dc.l	INTR		;4 Illegal instruction                          $000010 
-	dc.l	INTR		;5 Division by zero                             $000014 
-	dc.l	INTR		;6 CHK instruction                              $000018 
-	dc.l	INTR		;7 TRAPV instruction                            $00001C 
-	dc.l	INTR		;8 Privilege violation                          $000020 
-	dc.l	INTR		;9 Trace                                        $000024 
+	dc.l	$00FFFE00	;0 Reset SP                                     $000000
+	dc.l	START		;1 Reset PC                                     $000004
+	dc.l	INTR		;2 Bus error                                    $000008
+	dc.l	INTR		;3 Address error                                $00000C
+	dc.l	INTR		;4 Illegal instruction                          $000010
+	dc.l	INTR		;5 Division by zero                             $000014
+	dc.l	INTR		;6 CHK instruction                              $000018
+	dc.l	INTR		;7 TRAPV instruction                            $00001C
+	dc.l	INTR		;8 Privilege violation                          $000020
+	dc.l	INTR		;9 Trace                                        $000024
 	dc.l	INTR		;10                                             $000028
 	dc.l	INTR		;11                                             $00002C
-	dc.l	INTR		;12                                             $000030 
-	dc.l	INTR		;13                                             $000034 
-	dc.l	INTR		;14 Reserved                                    $000038 
-	dc.l	INTR		;15 Uninitialised interrupt                     $00003C 
-	dc.l	INTR		;16 Reserved                                    $000040 
-	dc.l	INTR		;17 Reserved                                    $000044 
-	dc.l	INTR		;18 Reserved                                    $000048 
-	dc.l	INTR		;19 Reserved                                    $00004C 
-	dc.l	INTR		;20 Reserved                                    $000050 
-	dc.l	INTR		;21 Reserved                                    $000054 
-	dc.l	INTR		;22 Reserved                                    $000058 
-	dc.l	INTR		;23 Reserved                                    $00005C 
-	dc.l	INTR		;24 Spurious interrupt                          $000060 
-	dc.l	INTR		;25 IRQ Level 1                                 $000064 
-	dc.l	INTR		;26 IRQ Level 2 EXT interrupt                   $000068 
-	dc.l	INTR		;27 IRQ Level 3                                 $00006C 
-	dc.l	HSYNC		;28 IRQ Level 4 Horizontal VDP interrupt        $000070 
-	dc.l	INTR		;29 IRQ Level 5                                 $000074 
-	dc.l	VSYNC		;30 IRQ Level 6 Vertical VDP interrupt          $000078 
-	dc.l	INTR		;31 IRQ Level 7                                 $00007C 
+	dc.l	INTR		;12                                             $000030
+	dc.l	INTR		;13                                             $000034
+	dc.l	INTR		;14 Reserved                                    $000038
+	dc.l	INTR		;15 Uninitialised interrupt                     $00003C
+	dc.l	INTR		;16 Reserved                                    $000040
+	dc.l	INTR		;17 Reserved                                    $000044
+	dc.l	INTR		;18 Reserved                                    $000048
+	dc.l	INTR		;19 Reserved                                    $00004C
+	dc.l	INTR		;20 Reserved                                    $000050
+	dc.l	INTR		;21 Reserved                                    $000054
+	dc.l	INTR		;22 Reserved                                    $000058
+	dc.l	INTR		;23 Reserved                                    $00005C
+	dc.l	INTR		;24 Spurious interrupt                          $000060
+	dc.l	INTR		;25 IRQ Level 1                                 $000064
+	dc.l	INTR		;26 IRQ Level 2 EXT interrupt                   $000068
+	dc.l	INTR		;27 IRQ Level 3                                 $00006C
+	dc.l	HSYNC		;28 IRQ Level 4 Horizontal VDP interrupt        $000070
+	dc.l	INTR		;29 IRQ Level 5                                 $000074
+	dc.l	VSYNC		;30 IRQ Level 6 Vertical VDP interrupt          $000078
+	dc.l	INTR		;31 IRQ Level 7                                 $00007C
 	dc.l	INTR		;32 TRAP #00                                    $000080
 	dc.l	INTR		;33 TRAP #01                                    $000084
 	dc.l	INTR		;34 TRAP #02                                    $000088
@@ -157,9 +154,8 @@ VRAMWCtrl equ $40000000
 	dc.l 	INTR		;63 Reserved                                    $0000FC
 
 ;--------------------------------------------------------------------------------------------------
-; ROM Cartridge header  $0000FF - $0001FF
+;  ROM Cartridge header  $0000FF - $0001FF
 ;--------------------------------------------------------------------------------------------------
-
 	dc.b	"SEGA MEGA DRIVE "									;Console name (16)          $000100
 	dc.b	"(C)SIFU 2021.JUL"									;Copyright information (16) $000110
 	dc.b	"MY PROG                                         "	;Domestic name (48)         $000120
@@ -177,9 +173,8 @@ VRAMWCtrl equ $40000000
 	dc.b	"JUE             "									;Country support (16)       $0001F0
 
 ;--------------------------------------------------------------------------------------------------
-; Exception handlers  $000200
+;  Exception handlers  $000200
 ;--------------------------------------------------------------------------------------------------
-
 INTR
 	rte
 
@@ -187,7 +182,6 @@ HSYNC
 	rte
 
 VSYNC
-
 	;move.l #$C0020000,d0					;Color 1
 	;move.l d0,VDPCtrl
 	;move.w #%0000000011101110,VDPData	
@@ -198,16 +192,15 @@ VSYNC
 	rte
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-; VDP registers
+;  VDP registers
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-VDPREG	
+VDPREG
 	dc.b	%00010100	;0 Mode set reg.1                                   0       0       0       IE1     0       1       M3      0
 	dc.b	%01100100	;1 Mode ser reg.2                                   0       DISP    IE0     M1      M2      1       0       0
-	dc.b	%00110000	;2 Pattern name table base address for Scroll A     0       0       SA15    SA14    SA13    0       0       0                   $C000
-	dc.b	%00111100	;3 Pattern name table base address for Window       0       0       WD15    WD14    WD13    WD12    WD11    0                   $F000
-	dc.b	%00000111	;4 Pattern name table base address for Scroll B     0       0       0       0       0       SB15    SB14    SB13                $E000
-	dc.b	%01101100	;5 Sprite attribute table base address              0       AT15    AT14    AT13    AT12    AT11    AT10    AT9                 $D800 
+	dc.b	%00110000	;2 Pattern name table base address for Scroll A     0       0       SA15    SA14    SA13    0       0       0              $C000
+	dc.b	%00111100	;3 Pattern name table base address for Window       0       0       WD15    WD14    WD13    WD12    WD11    0              $F000
+	dc.b	%00000111	;4 Pattern name table base address for Scroll B     0       0       0       0       0       SB15    SB14    SB13           $E000
+	dc.b	%01101100	;5 Sprite attribute table base address              0       AT15    AT14    AT13    AT12    AT11    AT10    AT9            $D800 
 	dc.b	%00000000	;6 Unused                                           0       0       0       0       0       0       0       0
 	dc.b	%00000000	;7 Background colour                                0       0       CP1     CP0     COL3    COL2    COL1    COL0
 	dc.b	%00000000	;8 Unused                                           0       0       0       0       0       0       0       0
@@ -215,7 +208,7 @@ VDPREG
 	dc.b	%00000000	;10 H Interrupt register                            BIT7    BIT6    BIT5    BIT4    BIT3    BIT2    BIT1    BIT0
 	dc.b	%00001000	;11 Mode set reg.3                                  0       0       0       0       IE2     VSCR    HSCR    LSCR
 	dc.b	%10000001	;12 Mode set reg.4                                  RS0     0       0       0       S/TE    LSM1    LSM0    RS1
-	dc.b	%00110111	;13 H Scroll data table base address                0       0       HS15    HS14    HS13    HS12    HS11    HS10                $FC00
+	dc.b	%00110111	;13 H Scroll data table base address                0       0       HS15    HS14    HS13    HS12    HS11    HS10           $FC00
 	dc.b	%00000000	;14 Unused                                          0       0       0       0       0       0       0       0
 	dc.b	%00000010	;15 Auto increment data                             INC7    INC6    INC5    INC4    INC3    INC2    INC1    INC0
 	dc.b	%00000001	;16 Scroll size                                     0       0       VSZ1    VSZ0    0       0       HSZ1    HSZ0
@@ -228,10 +221,9 @@ VDPREG
 	dc.b	%00000000	;23 DMA source address high                         DMD1    DMD0    SA22    SA21    SA20    SA19    SA18    SA17
 
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-; Graphics
+;  Graphics
 ;------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-TESTLETTER	
+TESTLETTER
 	dc.l	$10000010
 	dc.l	$01000100
 	dc.l	$00101000
@@ -249,9 +241,8 @@ RAWTEST
 RAWTEST_END
 
 ;--------------------------------------------------------------------------------------------------
-;	Main entry point
+;  Main entry point
 ;--------------------------------------------------------------------------------------------------	
-	
 START
 
 	move.b	($A10001),d0			;TMSS
@@ -270,10 +261,10 @@ NextVDPSetting
 	move.w d1,(VDPCtrl)		
 	add.l #$00000100,d1		;000081aa   000082bb   000083cc
 	dbra d2,NextVDPSetting
-	
+
     ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    ; VRAM addressing (64k: $0000 - $FFFF)
-    ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+    ;  VRAM addressing (64k: $0000 - $FFFF)
+    ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     ;  Layout is configurable. Using:
     ;  $0000  Pattern definitions
     ;  $C000  Scroll A Tilemap (8kb)
@@ -303,7 +294,6 @@ NextVDPSetting
     ;    ...            ...
     ;  $FFFF      $7FFF0003               0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1       0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   1
     ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     ;Clear VRAM
 	move.w	#($FFFF/2)-1,d0		;Iterating in words
 	move.l	#$40000000,d1
@@ -334,8 +324,7 @@ VRAMClrLoop
     ;  Color 14   $C01C0000       $C03C0000       $C05C0000       $C07C0000
     ;  Color 15   $C01E0000       $C03E0000       $C05E0000       $C07E0000
     ;----------------------------------------------------------------------
-
-	;Define Palette 0
+    ;Define Palette 0
 	move.l #$C0000000,d0					;Color 0
 	move.l d0,VDPCtrl
 	move.w #%0000000000000000,VDPData		;----BBB-GGG-RRR-
@@ -367,7 +356,7 @@ VRAMClrLoop
     ;---------------------------------------------------------------------------------------------
     ;  VSRAM addresses for vertical scrolling (special addresses, not in VRAM)
     ;  40 x 10bit words
-    ;
+    ;---------------------------------------------------------------------------------------------
     ;  To select a VSRAM address put the desired address in #$4xxx0010 and write to VDP_Ctrl port
     ;
     ;                                       VSRAM Write	CD0=CD2=1,  CD1=CD3=CD4=CD5=0       (for VSRAM Read CD2=1,  CD0=CD1=CD3=CD4=CD5=0)
@@ -381,13 +370,12 @@ VRAMClrLoop
     ;  VSRAM39  ScrollA19   $404C0010       0   1   0   0   0   0   0   0   0   1   0   0   1   1   0   0       0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0
     ;  VSRAM39  ScrollB19   $404E0010       0   1   0   0   0   0   0   0   0   1   0   0   1   1   1   0       0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   0
     ;---------------------------------------------------------------------------------------------
-
     ;VSRAM code here
 
     ;-----------------------------------------------------------------------
     ;  Load Patterns
     ;  8x8 Tiles starting at $0000 in VRAM. 4 Bits per pixel
-    ;
+    ;-----------------------------------------------------------------------
     ;TILE
     ;    dc.l   $10000010    ;Tile ID = $0000   Address in VRAM = $0000
     ;    dc.l   $01000100                                         $0004
@@ -407,7 +395,6 @@ VRAMClrLoop
     ;    dc.l   $10000010                                         $0038
     ;    dc.l   $00000000                                         $003C
     ;-----------------------------------------------------------------------
-
 	move.l #$40000000,d1
 	move.l d1,VDPCtrl
 
@@ -439,15 +426,14 @@ TileLoopRawtest
     ;  Scroll A.
     ;  Defined (in VDP Reg#2) from $C000 Onwards. 64 tiles length x 32 tiles height
     ;  8kb
-    ;
+    ;-------------------------------------------------------------------------------
     ;  b15 b14 b13 b12 b11 b10 b9  b8      b7  b6  b5  b4  b3  b2  b1  b0
     ;  L   P   P   V   H   T   T   T       T   T   T   T   T   T   T   T
     ;
     ;  T = Tile number              P = Pallet number
     ;  H = Horizontal flip          L = Layer (in front of /behind sprites)
     ;  V = Vertical flip
-    ;-------------------------------------------------------------------------------	
-
+    ;-------------------------------------------------------------------------------
 	move.l #$40000003,d0
 	move.l d0,VDPCtrl               ;b15 b14 b13 b12 b11 b10 b9  b8      b7  b6  b5  b4  b3  b2  b1  b0
 	move.w #$0001,VDPdata           ;0   0   0   0   0   0   0   0       0   0   0   0   0   0   0   1
@@ -528,7 +514,7 @@ TileLoopRawtest
     ;  Scroll B.
     ;  Defined (in VDP Reg#4) from $E000 Onwards. 64 tiles length x 32 tiles height
     ;  8kb
-    ;
+    ;-------------------------------------------------------------------------------
     ;  b15 b14 b13 b12 b11 b10 b9  b8      b7  b6  b5  b4  b3  b2  b1  b0
     ;  L   P   P   V   H   T   T   T       T   T   T   T   T   T   T   T
     ;
@@ -536,7 +522,6 @@ TileLoopRawtest
     ;  H = Horizontal flip          L = Layer (in front of /behind sprites)
     ;  V = Vertical flip
     ;-------------------------------------------------------------------------------
-
 	move.w	#($1000/2)-1,d0			
 	move.l	#$60000003,d1			
 	move.l	d1,VDPCtrl
@@ -549,14 +534,13 @@ ScrollBLoop
     ;  Defined (in VDP reg#3) from $F000 Onwards.
     ;  4kb in H40, 2kb in H32.
     ;--------------------------------------------------------------------	
-
     ;Window code here
 
     ;--------------------------------------------------------------------------------------------------------------------------------------------------------
     ;  Sprites.
     ;  Defined (in VDP reg#5) from $D800 Onwards. 1kb in H40, 512b in H32.
     ;  4 words per sprite.
-    ;
+    ;--------------------------------------------------------------------------------------------------------------------------------------------------------
     ;  Address  Sprite                                                                  b15 b14 b13 b12 b11 b10 b9  b8      b7  b6  b5  b4  b3  b2  b1  b0
     ;  $D800    1       Ypos                                                            -   -   -   -   -   -   Y   Y       Y   Y   Y   Y   Y   Y   Y   Y
     ;  $D802    1       Width(8,16,24,32), Height(8,16,24,32), Link to next sprite      -   -   -   -   W   W   H   H       -   L   L   L   L   L   L   L
@@ -582,8 +566,7 @@ ScrollBLoop
     ;    dc.b $002E             ; Index of first tile
     ;    dc.w 0x0080            ; X coord (+ 128)
     ;--------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	;Sprite1
+    ;Sprite1
 	move.l	#$58000003,d1
 	move.l	d1,VDPCtrl
 	move.w	#$0080,VDPData
@@ -601,7 +584,7 @@ ScrollBLoop
 	;move.w	#$0080,VDPData
 	move.w	#$00A0,VDPData	
 
-	;Sprite2
+    ;Sprite2
 	move.l	#$58080003,d1
 	move.l	d1,VDPCtrl
 	move.w	#$0090,VDPData
@@ -621,7 +604,7 @@ ScrollBLoop
     ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     ;  HScroll.
     ;  Defined (in VDP reg#13) from $FC00 Onwards.
-    ;
+    ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     ;                                             VRAM Write  CD1=0, CD0=1, CD2=CD3=CD4=CD5=0     (for VRAM Read  CD0=CD1=CD2=CD3=CD4=CD5=0)
     ;  Access via VDP                             First Word                                                          Second Word
     ;  address                ;VDP command        CD1 CD0 A13 A12 A11 A10 A9  A8  A7  A6  A5  A4  A3  A2  A1  A0      0   0   0   0   0   0   0   0   CD5 CD4 CD3 CD2 0   0   A15 A14
@@ -634,14 +617,11 @@ ScrollBLoop
     ;  $FFFE      ScrollB19   $7FFE0003           0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   0       0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   1
     ;
     ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     ;HScroll code here
 
     ;--------------------------------------------------------------------
     ;  Init game logic
-    ;
     ;--------------------------------------------------------------------	
-
 	move.l #$00000080,d0		;Counters
 	move.l #$00000080,d3
 	move.l #1000,d2
@@ -670,7 +650,6 @@ FMCheck
     ;--------------------------------------------------------------------
     ;  Main rendering loop
     ;--------------------------------------------------------------------
-
 MAINLOOP
 	move.l	#$58000003,d1
 	move.l	d1,VDPCtrl
@@ -693,5 +672,4 @@ STUCK
 ;	jmp MAINLOOP
 
     ;--------------------------------------------------------------------
-
-
+	

@@ -214,7 +214,7 @@ VDPREG
 	dc.b	%00000001   ;16 Scroll size                                     0       0       VSZ1    VSZ0    0       0       HSZ1    HSZ0
 	dc.b	%00000000   ;17 Window H position                               RIGT    0       0       WHP5    WHP4    WHP3    WHP2    WHP1
 	dc.b	%00000000   ;18 Window V position                               DOWN    0       0       WVP4    WVP3    WVP2    WVP1    WVP0
-	dc.b	%00000000   ;19 DMA length counter low                          LG7     LG6	    LG5     LG4     LG3     LG2     LG1     LG0
+	dc.b	%00000000   ;19 DMA length counter low                          LG7     LG6     LG5     LG4     LG3     LG2     LG1     LG0
 	dc.b	%00000000   ;20 DMA length counter high                         LG15    LG14    LG13    LG12    LG11    LG10    LG9     LG8
 	dc.b	%00000000   ;21 DMA source address low                          SA8     SA7     SA6     SA5     SA4     SA3     SA2     SA1
 	dc.b	%00000000   ;22 DMA source address mid                          SA16    SA15    SA14    SA13    SA12    SA11    SA10    SA9

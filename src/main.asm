@@ -1,4 +1,4 @@
-;Mega Drive project by SifuF 10/01/24
+;Mega Drive demo project by SifuF 10/01/24
 
 ;-----------------------------------------------------------------------------------------------
 ;  68k Memory map
@@ -84,6 +84,11 @@ VDPData equ $C00000
 VDPCtrl equ $C00004
 VRAMWCtrl equ $40000000
 
+; Every Genesis / Mega Drive binary must start with the 68k start-up vector
+; table. Important vectors to initialise are the Stack pointer, Program counter,
+; horizontal and vertical interrupt handlers. The remaining can be set to a
+; generic/unimplemented handler for now.
+
 ;------------------------------------------------------------------------------
 ;  68k Vector table   $000000 - $0000FF
 ;------------------------------------------------------------------------------
@@ -153,6 +158,8 @@ VRAMWCtrl equ $40000000
 	dc.l 	INTR        ;62 Reserved                                    $0000F8
 	dc.l 	INTR        ;63 Reserved                                    $0000FC
 
+; Directly following is the ROM header:
+
 ;--------------------------------------------------------------------------------------------------
 ;  ROM Cartridge header  $0000FF - $0001FF
 ;--------------------------------------------------------------------------------------------------
@@ -172,6 +179,9 @@ VRAMWCtrl equ $40000000
 	dc.b	"                                        "          ;Memo (40)                  $0001C8
 	dc.b	"JUE             "                                  ;Country support (16)       $0001F0
 
+; The VSYNC interrupt occurs at 60Hz (50Hz PAL) and should be used for updating the main rendering
+; loop. Note that the 68k status register SR, must be set each time to re-enable interrupts.
+
 ;--------------------------------------------------------------------------------------------------
 ;  Interupt handlers  $000200
 ;--------------------------------------------------------------------------------------------------
@@ -190,6 +200,8 @@ VSYNC
 
 	jmp MAINLOOP
 	rte
+
+; The VDP has 24 special registers that along with the contents of VRAM, VSRAM, and CRAM, define its state.
 
 ;-------------------------------------------------------------------------------------------------------------------------------------------------------
 ;  VDP registers
@@ -240,6 +252,11 @@ RAWTEST
 	incbin "rawtest.raw"
 RAWTEST_END
 
+; The program code then begins at $000200. We define interrupt handlers, VDP register settings,
+; and tiles (can be defined directly in src, INCLUDE from another src file, or incbin as raw binary),
+; and then create the main entry point using the label that we initialised the PC with. First thing
+; our program must do is disable the TMSS, and then initialise the VDP.
+
 ;--------------------------------------------------------------------------------------------------
 ;  Main entry point
 ;--------------------------------------------------------------------------------------------------
@@ -259,6 +276,16 @@ NextVDPSetting
 	move.w d1,(VDPCtrl)
 	add.l #$00000100,d1          ;000081aa   000082bb   000083cc
 	dbra d2,NextVDPSetting
+
+    ; Next we prepare the VRAM, VSRAM, and CRAM.
+
+    ; The VRAM has a configurable layout and holds almost everything: Pattern definitions, Scroll A tilemap (8kb),
+	; Sprite attribute table, Scroll B tilemap (8kb), Window map, and Hscroll table. We start by clearing the VRAM,
+	; then load the tiles (pattern definitions) from $0000 onwards, then fill Scroll A with tile ID's. Scroll B
+	; and Sprites are handled in a similar fashion, just for sprites you fill out their attributes in the attribute table.
+
+	; VSRAM is for vertical scrolling. up to 40 columns can be selected. It is not part of VRAM.
+    ; CRAM is for colour palettes. There are 4, each with 16 colours. It is not part of VRAM.
 
     ;------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     ;  VRAM addressing (64k: $0000 - $FFFF)
@@ -624,7 +651,7 @@ ScrollBLoop
 	move.l #$00000080,d3
 	move.l #1000,d2
 
-	;move.w	#$8144,(VDPCtrl)    ;C00004 reg 1 = 0x44 unblank display
+	;move.w	#$8144,(VDPCtrl)    ;C00004 VDP register 1 = 0x44 unblank display
 	
 	move.w  #$100,$A11100       ;Z80 Bus REQ on (#$0 = off)
 	move.w  #$100,$A11200       ;Z80 Reset off (#$0 = on)

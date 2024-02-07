@@ -280,11 +280,11 @@ NextVDPSetting
     ; Next we prepare the VRAM, VSRAM, and CRAM.
 
     ; The VRAM has a configurable layout and holds almost everything: Pattern definitions, Scroll A tilemap (8kb),
-	; Sprite attribute table, Scroll B tilemap (8kb), Window map, and Hscroll table. We start by clearing the VRAM,
-	; then load the tiles (pattern definitions) from $0000 onwards, then fill Scroll A with tile ID's. Scroll B
-	; and Sprites are handled in a similar fashion, just for sprites you fill out their attributes in the attribute table.
+    ; Sprite attribute table, Scroll B tilemap (8kb), Window map, and Hscroll table. We start by clearing the VRAM,
+    ; then load the tiles (pattern definitions) from $0000 onwards, then fill Scroll A with tile ID's. Scroll B
+    ; and Sprites are handled in a similar fashion, just for sprites you fill out their attributes in the attribute table.
 
-	; VSRAM is for vertical scrolling. up to 40 columns can be selected. It is not part of VRAM.
+    ; VSRAM is for vertical scrolling. up to 40 columns can be selected. It is not part of VRAM.
     ; CRAM is for colour palettes. There are 4, each with 16 colours. It is not part of VRAM.
 
     ;------------------------------------------------------------------------------------------------------------------------------------------------------------------------

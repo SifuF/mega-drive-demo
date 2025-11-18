@@ -1,0 +1,12 @@
+
+main exception string
+"Ns  ERROR EXCEPTION   at      BUS ERROR      at    ADDRESS ERROR    at ILLEGAL INSTRUCTION at     ZERO DIVIDE     at   CHK INSTRUCTION   at  TRAPV INSTRUCTION  at PRIVILEGE VIOLATION at        TRACE        at LINE %1010 EMULATOR at LINE %1111 EMULATOR at "
+
+Bus error 0x17,(DAT_fffff416).w
+Address error 0x2e,(DAT_fffff416).w
+Illegal instruction 0x45,(DAT_fffff416).w
+Division by zero 0x5c,(DAT_fffff416).w
+CHK instruction 0x73,(DAT_fffff416).w
+TRAPV instruction
+Privilege violation
+Trace
